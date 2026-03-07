@@ -1,51 +1,116 @@
+using System;
+
 using UnityEngine;
 
 public class Player : MonoBehaviour
 {
-    public int speed;
-    private Rigidbody2D rb;
-    public int jumpForce;
+    [SerializeField] private int speed;
+    [SerializeField] private int jumpForce;
+    [SerializeField] private GameObject JumpEffect;
+
     private bool isGrounded;
+    private bool isWallSliding;
     private bool isFacingright;
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
+    private bool isJumping;
+    private Rigidbody2D rb;
+    private bool isMidAirJumpLeft;
+
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
     }
 
-    // Update is called once per frame
+
+
     void Update()
     {
-        Move();
-        Jump();
+        
+        if (Input.GetButtonDown("GroundJump") && isGrounded)
+        {
+            isJumping = true;
+        }
     }
+    void FixedUpdate()
+    {
+        Move();
+
+        if (isJumping && isGrounded)
+        {
+            GroundJump();
+            isJumping = false;
+            isGrounded = false;
+        }
+
+        else if (isJumping && isWallSliding)
+        {
+            WallJump();
+            isJumping = false;
+            isGrounded = false;
+        }
+        else if (isJumping && isMidAirJumpLeft)
+        {
+            MidAirJump();
+        }
+    }
+
+    private void WallJump()
+    {
+        Debug.Log("WallJump");
+        rb.AddForce(transform.up * ((float)jumpForce / 0.5f), ForceMode2D.Impulse);
+        if (isFacingright)
+        {
+            rb.AddForce(transform.right * ((float)jumpForce / 0.5f), ForceMode2D.Impulse);
+        }
+        else
+        {
+            rb.AddForce(transform.right * ((float)jumpForce / 0.5f), ForceMode2D.Impulse);
+        }
+    }
+
     private void Move()
     {
         Vector3 movement = new Vector3(Input.GetAxis("Horizontal"), 0,0);
         transform.position += movement * Time.deltaTime * speed;
-        if (Input.GetAxis("Horizontal") > 0 && isFacingright == false)
+        if (Input.GetAxis("Horizontal") > 0 && !isFacingright)
         {
             isFacingright = true;
             Flip();
         }
-        if (Input.GetAxis("Horizontal") < 0 && isFacingright == true)
+        if (Input.GetAxis("Horizontal") < 0 && isFacingright)
         {
             isFacingright = false;
             Flip();
         }
     }
-    private void Jump()
+
+    private void GroundJump()
     {
-        if (Input.GetButtonDown("Jump") && isGrounded==true)
-        {
-            rb.AddForce(transform.up *jumpForce, ForceMode2D.Impulse);
-        }
+
+        Debug.Log("JUMP");
+        rb.AddForce(transform.up *jumpForce, ForceMode2D.Impulse);
+      
     }
+
+    private void MidAirJump()
+    {
+        isMidAirJumpLeft = false;
+        Debug.Log("MidAirJump");
+        rb.AddForce(transform.up * jumpForce, ForceMode2D.Impulse);
+
+    }
+
     private void OnCollisionEnter2D(Collision2D other)
     {
         if(other.gameObject.tag == "ground")
         {
             isGrounded = true;
+            isMidAirJumpLeft = true;
+            isWallSliding = false;
+        }
+        else if (other.gameObject.tag == "wall")
+        {
+            isWallSliding = true;
+            rb.gravityScale = 0.5f;
         }
     }
     private void OnCollisionExit2D(Collision2D other)
@@ -53,6 +118,11 @@ public class Player : MonoBehaviour
         if (other.gameObject.tag == "ground")
         {
             isGrounded = false;
+        }
+        else if (other.gameObject.tag == "wall")
+        {
+            isWallSliding = false;
+            rb.gravityScale = 1f;
         }
     }
     private void Flip()
