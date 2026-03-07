@@ -1,25 +1,10 @@
 fileFormatVersion: 2
-guid: 734ac5458973b1740a1e4d30c1554cdf
+guid: b0c32bb43af3f9142820a78e84d79b8c
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 3356837773014537050
-    second: Untitled_Artwork (1)_0
-  - first:
-      213: -1313353148447141868
-    second: Untitled_Artwork (1)_1
-  - first:
-      213: -6443216237094913530
-    second: Untitled_Artwork (1)_2
-  - first:
-      213: 1945345745729503507
-    second: Untitled_Artwork (1)_3
-  - first:
-      213: 3879095716626044692
-    second: Untitled_Artwork (1)_4
-  - first:
-      213: -6349296538101697551
-    second: Untitled_Artwork (1)_5
+      213: -1291332319150455326
+    second: backgroundSnow_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -52,7 +37,7 @@ TextureImporter:
   maxTextureSize: 2048
   textureSettings:
     serializedVersion: 2
-    filterMode: 0
+    filterMode: 1
     aniso: 1
     mipBias: 0
     wrapU: 1
@@ -90,7 +75,7 @@ TextureImporter:
     maxTextureSize: 2048
     resizeAlgorithm: 0
     textureFormat: -1
-    textureCompression: 0
+    textureCompression: 1
     compressionQuality: 50
     crunchedCompression: 0
     allowsAlphaSplitting: 0
@@ -141,13 +126,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Untitled_Artwork (1)_0
+      name: backgroundSnow_0
       rect:
         serializedVersion: 2
-        x: 91
-        y: 1550
-        width: 217
-        height: 150
+        x: 0
+        y: 0
+        width: 1920
+        height: 1080
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -156,118 +141,96 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: a5315255b22e59e20800000000000000
-      internalID: 3356837773014537050
+      spriteID: 2e54e06f814441ee0800000000000000
+      internalID: -1291332319150455326
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Untitled_Artwork (1)_1
+      name: backgroundSnow_1
       rect:
         serializedVersion: 2
-        x: 127
-        y: 1253
-        width: 212
-        height: 113
+        x: 1920
+        y: 0
+        width: 1920
+        height: 1080
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
-      tessellationDetail: -1
+      tessellationDetail: 0
       bones: []
-      spriteID: 410da2a154806cde0800000000000000
-      internalID: -1313353148447141868
+      spriteID: 8a714a26cf0cb084a8122873926145c1
+      internalID: 1373152191
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Untitled_Artwork (1)_2
+      name: backgroundSnow_2
       rect:
         serializedVersion: 2
-        x: 146
-        y: 954
-        width: 191
-        height: 145
+        x: 3840
+        y: 0
+        width: 1920
+        height: 1080
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
-      tessellationDetail: -1
+      tessellationDetail: 0
       bones: []
-      spriteID: 60abde058f81596a0800000000000000
-      internalID: -6443216237094913530
+      spriteID: 85862044c8420404097668b2c86bb790
+      internalID: 425191912
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Untitled_Artwork (1)_3
+      name: backgroundSnow_3
       rect:
         serializedVersion: 2
-        x: 92
-        y: 667
-        width: 251
-        height: 175
+        x: 5760
+        y: 0
+        width: 1920
+        height: 1080
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
-      tessellationDetail: -1
+      tessellationDetail: 0
       bones: []
-      spriteID: 311468b16a14ffa10800000000000000
-      internalID: 1945345745729503507
+      spriteID: 77806446f719bf043ab25cf11b2f9fde
+      internalID: -85093846
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Untitled_Artwork (1)_4
+      name: backgroundSnow_4
       rect:
         serializedVersion: 2
-        x: 120
-        y: 420
-        width: 289
-        height: 132
+        x: 7680
+        y: 0
+        width: 1920
+        height: 1080
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
-      tessellationDetail: -1
+      tessellationDetail: 0
       bones: []
-      spriteID: 4171c3f700155d530800000000000000
-      internalID: 3879095716626044692
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Untitled_Artwork (1)_5
-      rect:
-        serializedVersion: 2
-        x: 88
-        y: 68
-        width: 293
-        height: 171
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: 1f3b4d84074c2e7a0800000000000000
-      internalID: -6349296538101697551
+      spriteID: b52cf6c20ed82604d81d1e1bc01cdd66
+      internalID: -1475488534
       vertices: []
       indices: 
       edges: []
@@ -276,7 +239,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: 452b0f6da868342449502fdf3a6c2ff0
+    spriteID: 2d90aa4bf47486f4193cc26112fdbc16
     internalID: 0
     vertices: []
     indices: 
@@ -286,12 +249,11 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      Untitled_Artwork (1)_0: 3356837773014537050
-      Untitled_Artwork (1)_1: -1313353148447141868
-      Untitled_Artwork (1)_2: -6443216237094913530
-      Untitled_Artwork (1)_3: 1945345745729503507
-      Untitled_Artwork (1)_4: 3879095716626044692
-      Untitled_Artwork (1)_5: -6349296538101697551
+      backgroundSnow_0: -1291332319150455326
+      backgroundSnow_1: 1373152191
+      backgroundSnow_2: 425191912
+      backgroundSnow_3: -85093846
+      backgroundSnow_4: -1475488534
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

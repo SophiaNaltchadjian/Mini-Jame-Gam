@@ -25,7 +25,7 @@ public class Player : MonoBehaviour
     void Update()
     {
         
-        if (Input.GetButtonDown("GroundJump") && isGrounded)
+        if (Input.GetButtonDown("Jump") && isGrounded)
         {
             isJumping = true;
         }
@@ -34,11 +34,10 @@ public class Player : MonoBehaviour
     {
         Move();
 
-        if (isJumping && isGrounded)
+        if (isJumping && isGrounded && !isWallSliding)
         {
+            
             GroundJump();
-            isJumping = false;
-            isGrounded = false;
         }
 
         else if (isJumping && isWallSliding)
@@ -69,7 +68,7 @@ public class Player : MonoBehaviour
 
     private void Move()
     {
-        Vector3 movement = new Vector3(Input.GetAxis("Horizontal"), 0,0);
+        Vector3 movement = new Vector3(Input.GetAxis("Horizontal"), 0, 0);
         transform.position += movement * Time.deltaTime * speed;
         if (Input.GetAxis("Horizontal") > 0 && !isFacingright)
         {
@@ -81,6 +80,7 @@ public class Player : MonoBehaviour
             isFacingright = false;
             Flip();
         }
+
     }
 
     private void GroundJump()
@@ -88,7 +88,11 @@ public class Player : MonoBehaviour
 
         Debug.Log("JUMP");
         rb.AddForce(transform.up *jumpForce, ForceMode2D.Impulse);
-      
+        if (isGrounded)
+        {
+            isJumping = false;
+        }
+
     }
 
     private void MidAirJump()
@@ -103,6 +107,7 @@ public class Player : MonoBehaviour
     {
         if(other.gameObject.tag == "ground")
         {
+            
             isGrounded = true;
             isMidAirJumpLeft = true;
             isWallSliding = false;
