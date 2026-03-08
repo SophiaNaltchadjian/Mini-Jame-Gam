@@ -45,6 +45,7 @@ public class Player : MonoBehaviour
 
     void Update()
     {
+        Debug.Log(isSliding);
         horizontal = isOnSlidingObject ? Input.GetAxis("Horizontal") : Input.GetAxisRaw("Horizontal");
 
         if (whistleCooldownTimer > 0f)
@@ -61,12 +62,12 @@ public class Player : MonoBehaviour
         {
             isJumpingPressed = true;
         }
-        if (Input.GetAxis("Horizontal") > 0)
+        if (Input.GetAxis("Horizontal") > 0 && isFacingRight==false)
         {
             FlipToRight();
             
         }
-        else
+        else if(Input.GetAxis("Horizontal") < 0 && isFacingRight == true)
         {
             FlipToLeft();
         }
@@ -188,10 +189,12 @@ public class Player : MonoBehaviour
         if (currentGround != null && currentGround.TryGetComponent<Freezable>(out Freezable freezable))
         {
             isOnSlidingObject = freezable.IsFrozen;
+            Debug.Log(freezable.IsFrozen);
         }
         else
         {
             isOnSlidingObject = false;
+        
         }
     }
 

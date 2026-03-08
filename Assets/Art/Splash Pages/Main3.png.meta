@@ -1,10 +1,13 @@
 fileFormatVersion: 2
-guid: e34b0e16b25a04f42a651a461b9fd7e5
+guid: 8105b0f1e16e39d458dea12597f351c3
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 3346224736694964515
-    second: Acorns_0
+      213: 5559095313931215440
+    second: Main3_0
+  - first:
+      213: 6994770232552949628
+    second: Main3_1
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -126,13 +129,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Acorns_0
+      name: Main3_0
       rect:
         serializedVersion: 2
-        x: 0
-        y: 64
-        width: 1920
-        height: 1014
+        x: 1266
+        y: 479
+        width: 10
+        height: 10
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -141,8 +144,30 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 32114514bad207e20800000000000000
-      internalID: 3346224736694964515
+      spriteID: 052a8631cbfd52d40800000000000000
+      internalID: 5559095313931215440
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Main3_1
+      rect:
+        serializedVersion: 2
+        x: 1439
+        y: 335
+        width: 367
+        height: 384
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c778bc4777a621160800000000000000
+      internalID: 6994770232552949628
       vertices: []
       indices: 
       edges: []
@@ -161,7 +186,8 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      Acorns_0: 3346224736694964515
+      Main3_0: 5559095313931215440
+      Main3_1: 6994770232552949628
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
