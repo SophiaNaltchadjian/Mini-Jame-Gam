@@ -36,8 +36,8 @@ public class Player : MonoBehaviour
     void Update()
     {
         horizontal = Input.GetAxis("Horizontal");
-        //Why did you make this GroundJump? 
         if (Input.GetButtonDown("Jump"))
+
         {
             isJumping = true;
         }
@@ -46,8 +46,11 @@ public class Player : MonoBehaviour
     {
         ApplyCustomGravity(rb);
         Move();
-        if (isJumping && isGrounded)
+
+
+        if (isJumping && isGrounded && !isWallSliding)
         {
+            
             GroundJump();
         }
 
@@ -102,11 +105,11 @@ public class Player : MonoBehaviour
 
     private void Move()
     {
-        
-        float targetSpeed = horizontal * maxSpeed;
-        float newSpeed = Mathf.MoveTowards(rb.linearVelocity.x, targetSpeed, acceleration * Time.fixedDeltaTime);
-        rb.linearVelocity = new Vector2(newSpeed, rb.linearVelocity.y);
-        if (horizontal > 0 && !isFacingright)
+
+        Vector3 movement = new Vector3(Input.GetAxis("Horizontal"), 0, 0);
+        transform.position += movement * Time.deltaTime * speed;
+        if (Input.GetAxis("Horizontal") > 0 && !isFacingright)
+
         {
             isFacingright = true;
             Flip();
@@ -117,6 +120,7 @@ public class Player : MonoBehaviour
             isFacingright = false;
             Flip();
         }
+
     }
 
     private void GroundJump()
@@ -125,7 +129,7 @@ public class Player : MonoBehaviour
         Debug.Log("JUMP");
         rb.linearVelocity = new Vector2(rb.linearVelocity.x, jumpForce);
 
-      
+    
     }
 
     private void MidAirJump()
@@ -140,6 +144,7 @@ public class Player : MonoBehaviour
     {
         if(other.gameObject.tag == "ground")
         {
+            
             isGrounded = true;
             isMidAirJumpLeft = true;
         }
