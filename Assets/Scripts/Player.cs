@@ -24,6 +24,7 @@ public class Player : MonoBehaviour
     private Rigidbody2D rb;
     private bool isMidAirJumpLeft;
     private float horizontal;
+    private bool isWhistleCollected;
 
     void Start()
     {
@@ -53,6 +54,7 @@ public class Player : MonoBehaviour
         else if (isJumping && isWallSliding)
         {
             WallJump();
+
         }
         else if (isJumping && isMidAirJumpLeft)
         {
@@ -144,6 +146,11 @@ public class Player : MonoBehaviour
         if (other.gameObject.tag == "wall")
         {
             isWallSliding = true;
+        }
+        if (other.gameObject.GetComponent<Whistle>())
+        {
+            Destroy(other.gameObject);
+            isWhistleCollected = true;
         }
     }
     private void OnCollisionExit2D(Collision2D other)
