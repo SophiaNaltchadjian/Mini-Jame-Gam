@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 public class WhistleHandler : MonoBehaviour
@@ -5,10 +6,18 @@ public class WhistleHandler : MonoBehaviour
     private bool hasWhistle;
     private bool isFreeze;
     private Animator animator;
+    private List<Freezable> freezables = new List<Freezable>();
 
     void Start()
     {
         animator = GetComponent<Animator>();
+        RefreshFreezables();
+    }
+
+    public void RefreshFreezables()
+    {
+        freezables.Clear();
+        freezables.AddRange(FindObjectsByType<Freezable>(FindObjectsSortMode.None));
     }
 
     void Update()
@@ -29,19 +38,9 @@ public class WhistleHandler : MonoBehaviour
         isFreeze = !isFreeze;
         animator.SetBool("IsFreeze", isFreeze);
 
-        if (isFreeze)
+        foreach (Freezable f in freezables)
         {
-            foreach (GameObject obj in GameObject.FindGameObjectsWithTag("Snow"))
-                obj.SetActive(false);
-            foreach (GameObject obj in GameObject.FindGameObjectsWithTag("Freeze"))
-                obj.SetActive(true);
-        }
-        else
-        {
-            foreach (GameObject obj in GameObject.FindGameObjectsWithTag("Freeze"))
-                obj.SetActive(false);
-            foreach (GameObject obj in GameObject.FindGameObjectsWithTag("Snow"))
-                obj.SetActive(true);
+            f.OnWhistle(isFreeze);
         }
     }
 }

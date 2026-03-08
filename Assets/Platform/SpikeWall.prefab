@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 3068246783306654932}
   - component: {fileID: 9059427032619896037}
   m_Layer: 0
-  m_Name: Wall
+  m_Name: SpikeWall
   m_TagString: wall
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -85,7 +85,7 @@ SpriteRenderer:
   m_SortingLayer: 3
   m_SortingOrder: 0
   m_MaskInteraction: 0
-  m_Sprite: {fileID: 4807018304156356914, guid: 13a855264d444dc459ca45e3b5cd2cca, type: 3}
+  m_Sprite: {fileID: -4314099884564736127, guid: 73caa8af9fbf668468eb3e006624c4ad, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -145,7 +145,7 @@ BoxCollider2D:
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 1.14, y: 4.59}
+    oldSize: {x: 1.42, y: 4.86}
     newSize: {x: 1, y: 1}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
@@ -166,8 +166,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Freezable
   mode: 2
-  freezeSprite: {fileID: 6852359477445188899, guid: faf3e01cdd847734880ac91667c5d9bf, type: 3}
-  snowSprite: {fileID: 4807018304156356914, guid: 13a855264d444dc459ca45e3b5cd2cca, type: 3}
+  freezeSprite: {fileID: 1495455057506180953, guid: ead25584f283e4243b9ff141c6310926, type: 3}
+  snowSprite: {fileID: -4314099884564736127, guid: 73caa8af9fbf668468eb3e006624c4ad, type: 3}
 --- !u!1 &2752697297524013660
 GameObject:
   m_ObjectHideFlags: 0

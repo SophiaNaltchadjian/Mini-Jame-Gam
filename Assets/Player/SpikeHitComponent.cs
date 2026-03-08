@@ -4,7 +4,7 @@ public class SpikeHitComponent : MonoBehaviour
 {
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     public bool IsGameOver = false;
-    void OnCollisionEnter(Collision collision)
+    void OnCollisionEnter2D(Collision2D collision)
     {
         if (collision.gameObject.GetComponent<Spike>())
         {

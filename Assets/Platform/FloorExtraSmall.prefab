@@ -11,9 +11,10 @@ GameObject:
   - component: {fileID: 4172869059281155654}
   - component: {fileID: 3979704169562779085}
   - component: {fileID: 2910662221603693906}
+  - component: {fileID: 8410534936678149253}
   - component: {fileID: 7057376548463583010}
   m_Layer: 0
-  m_Name: Floor
+  m_Name: FloorExtraSmall
   m_TagString: ground
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -29,7 +30,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0.38, y: -5.04, z: 0}
-  m_LocalScale: {x: 13.240791, y: 1.469802, z: 1}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -80,11 +81,11 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_GlobalIlluminationMeshLod: 0
   m_SortingLayerID: -120202629
-  m_SortingLayer: 2
+  m_SortingLayer: 3
   m_SortingOrder: 0
   m_MaskInteraction: 0
-  m_Sprite: {fileID: 7482667652216324306, guid: 311925a002f4447b3a28927169b83ea6, type: 3}
-  m_Color: {r: 0.49056602, g: 0.27999285, b: 0.27999285, a: 1}
+  m_Sprite: {fileID: 6147745799811203807, guid: 4f99538ab277c7e4fb1215a4fec67bf6, type: 3}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -105,6 +106,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d92fa745ce150244a878b993c011202f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: '::'
+--- !u!114 &8410534936678149253
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1169366955993126623}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 414e8716207fea044bf438ad0520ea7b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Freezable
+  mode: 2
+  freezeSprite: {fileID: -127680086124061934, guid: 3ea0e48b803969a43b6d4fa7b2a90546, type: 3}
+  snowSprite: {fileID: 6147745799811203807, guid: 4f99538ab277c7e4fb1215a4fec67bf6, type: 3}
 --- !u!61 &7057376548463583010
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -139,15 +155,15 @@ BoxCollider2D:
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
-  m_Offset: {x: 0, y: 0}
+  m_Offset: {x: 0, y: -0.07}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 1, y: 1}
+    oldSize: {x: 0.93, y: 0.55}
     newSize: {x: 1, y: 1}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
-  m_Size: {x: 1, y: 1}
+  m_Size: {x: 9.81, y: 0.51}
   m_EdgeRadius: 0

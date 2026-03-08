@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class CameraMovementHandler : MonoBehaviour
 {
-    [SerializeField] GameObject camera;
+    [SerializeField] GameObject CameraObject;
     [SerializeField] GameObject player;
     void Start()
     {
@@ -10,10 +10,12 @@ public class CameraMovementHandler : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update()
+    [SerializeField] float smoothSpeed = 5f;
+
+    void LateUpdate()
     {
-        Vector3 newVector = player.transform.position;
-        newVector.z = -10f;
-        camera.transform.position = newVector;
+        Vector3 target = player.transform.position;
+        target.z = -10f;
+        CameraObject.transform.position = Vector3.Lerp(CameraObject.transform.position, target, smoothSpeed * Time.deltaTime);
     }
 }
