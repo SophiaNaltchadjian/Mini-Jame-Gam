@@ -1,5 +1,5 @@
 using System;
-
+using System.Linq.Expressions;
 
 using UnityEngine;
 
@@ -20,18 +20,22 @@ public class Player : MonoBehaviour
 
     private bool isGrounded;
     private bool isWallSliding;
-    private bool isFacingright;
-    private bool isJumping;
+    private bool isSliding;
+    private bool isFacingRight;
+    private bool isJumpingPressed;
     private Rigidbody2D rb;
     private SpriteRenderer spriteRenderer;
+    private Animator animator;
     private bool isMidAirJumpLeft;
     private float horizontal;
     private WhistleHandler whistleHandler;
+    private float whistleCooldownTimer;
 
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
         spriteRenderer = GetComponent<SpriteRenderer>();
+        animator = GetComponent<Animator>();
         whistleHandler = GetComponent<WhistleHandler>();
     }
 
@@ -40,24 +44,36 @@ public class Player : MonoBehaviour
     void Update()
     {
         horizontal = Input.GetAxis("Horizontal");
+
+        if (whistleCooldownTimer > 0f)
+            whistleCooldownTimer -= Time.deltaTime;
+
+        if ((Input.GetKeyDown(KeyCode.LeftShift) || Input.GetKeyDown(KeyCode.E)) && whistleCooldownTimer <= 0f && whistleHandler.CanBlow())
+        {
+            whistleHandler.BlowWhistle();
+            whistleCooldownTimer = 3f;
+        }
+
         if (Input.GetButtonDown("Jump"))
 
         {
-            isJumping = true;
+            isJumpingPressed = true;
         }
         if (Input.GetAxis("Horizontal") > 0)
         {
-            isFacingright = true;
-            spriteRenderer.flipX = true;
-
+            FlipToRight();
+            
         }
-        if (horizontal < 0)
+        else
         {
-
-            isFacingright = false;
-            spriteRenderer.flipX = false;
+            FlipToLeft();
         }
-
+        animator.SetBool("IsGrounded", isGrounded); 
+        animator.SetBool("IsRunning", Mathf.Abs(horizontal) > 0.01f && isGrounded);
+        //animator.SetBool("IsMidAirJumping", !isMidAirJumpLeft && !isGrounded);
+        animator.SetBool("IsSliding", isSliding && isGrounded);
+        animator.SetBool("IsWallSliding", isWallSliding && !isGrounded);
+       // animator.SetBool("IsJumping", isJumpingPressed);
     }
     void FixedUpdate()
     {
@@ -65,23 +81,27 @@ public class Player : MonoBehaviour
         Move();
         //『ありがと』s
 
-        if (isJumping && isGrounded && !isWallSliding)
+        if (isJumpingPressed && isGrounded && !isWallSliding)
         {
             
             GroundJump();
+
+            animator.SetTrigger("PlayJump");
         }
 
-        else if (isJumping && isWallSliding)
+        else if (isJumpingPressed && isWallSliding)
         {
             WallJump();
+            animator.SetTrigger("PlayJump");
 
         }
-        else if (isJumping && isMidAirJumpLeft)
+        else if (isJumpingPressed && isMidAirJumpLeft)
         {
             MidAirJump();
+            animator.SetTrigger("PlayAirJump");
         }
         
-        isJumping = false;
+        isJumpingPressed = false;
     }
 
     private void ApplyCustomGravity(Rigidbody2D rigidbody2D)
@@ -116,15 +136,30 @@ public class Player : MonoBehaviour
     {
         Debug.Log("WallJump");
         float wallKickForce = wallJumpForce;
-        if (isFacingright)
+        if (isFacingRight)
         {
             wallKickForce = -wallJumpForce;
         }
         rb.linearVelocity = new Vector2(wallKickForce, jumpForce);
     }
-
+    void FlipToLeft()
+    {
+        isFacingRight = false;
+        Vector3 scale = transform.localScale;
+        scale.x = 1;
+        transform.localScale = scale;
+    }
+    void FlipToRight()
+    {
+        isFacingRight = true;
+        Vector3 scale = transform.localScale;
+        scale.x = -1;
+        transform.localScale = scale;
+    }
     private void Move()
     {
+        
+
         float newX = rb.linearVelocity.x + horizontal * acceleration * Time.fixedDeltaTime;
         newX = Mathf.Clamp(newX, -maxSpeed, maxSpeed);
         rb.linearVelocity = new Vector2(newX, rb.linearVelocity.y);
@@ -174,12 +209,5 @@ public class Player : MonoBehaviour
         {
             isWallSliding = false;
         }
-    }
-    private void Flip()
-    {
-       
-        Vector3 currentScale = transform.localScale;
-        currentScale.x *= -1;
-        transform.localScale = currentScale;
     }
 }

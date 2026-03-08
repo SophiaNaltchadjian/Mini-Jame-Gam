@@ -18,19 +18,27 @@ public class WhistleHandler : MonoBehaviour
     {
         freezables.Clear();
         freezables.AddRange(FindObjectsByType<Freezable>(FindObjectsSortMode.None));
-    }
-
-    void Update()
-    {
-        if (hasWhistle && Input.GetKeyDown(KeyCode.E))
+        foreach (Freezable freezable in freezables)
         {
-            BlowWhistle();
+            if (freezable.mode == WeatherMode.FreezeOnly)
+            {
+                freezable.gameObject.SetActive(false);
+            }
+            else
+            {
+                freezable.gameObject.SetActive(true);
+            }
         }
     }
 
     public void Collect()
     {
         hasWhistle = true;
+    }
+
+    public bool CanBlow()
+    {
+        return hasWhistle;
     }
 
     public void BlowWhistle()
