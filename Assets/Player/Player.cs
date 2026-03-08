@@ -30,6 +30,8 @@ public class Player : MonoBehaviour
     private float horizontal;
     private WhistleHandler whistleHandler;
     private float whistleCooldownTimer;
+    private bool isOnSlidingObject;
+    private GameObject currentGround;
 
     void Start()
     {
@@ -43,7 +45,7 @@ public class Player : MonoBehaviour
 
     void Update()
     {
-        horizontal = Input.GetAxis("Horizontal");
+        horizontal = isOnSlidingObject ? Input.GetAxis("Horizontal") : Input.GetAxisRaw("Horizontal");
 
         if (whistleCooldownTimer > 0f)
             whistleCooldownTimer -= Time.deltaTime;
@@ -181,22 +183,41 @@ public class Player : MonoBehaviour
         rb.linearVelocity = new Vector2(rb.linearVelocity.x, jumpForce);
     }
 
+    public void CheckSlidingObject()
+    {
+        if (currentGround != null && currentGround.TryGetComponent<Freezable>(out Freezable freezable))
+        {
+            isOnSlidingObject = freezable.IsFrozen;
+        }
+        else
+        {
+            isOnSlidingObject = false;
+        }
+    }
+
     private void OnCollisionEnter2D(Collision2D other)
     {
         if(other.gameObject.tag == "ground")
         {
-            
+
             isGrounded = true;
             isMidAirJumpLeft = true;
+            currentGround = other.gameObject;
+            CheckSlidingObject();
         }
         if (other.gameObject.tag == "wall")
         {
             isWallSliding = true;
         }
+        
         if (other.gameObject.TryGetComponent<Whistle>(out _))
         {
             Destroy(other.gameObject);
             whistleHandler.Collect();
+        }
+        if (other.gameObject.TryGetComponent<GameEnding>(out _))
+        {
+            Destroy(other.gameObject);
         }
     }
     private void OnCollisionExit2D(Collision2D other)
@@ -204,6 +225,8 @@ public class Player : MonoBehaviour
         if (other.gameObject.tag == "ground")
         {
             isGrounded = false;
+            currentGround = null;
+            isOnSlidingObject = false;
         }
         if (other.gameObject.tag == "wall")
         {

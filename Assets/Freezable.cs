@@ -18,6 +18,7 @@ public class Freezable : MonoBehaviour
     public Sprite snowSprite;
 
     private SpriteRenderer spriteRenderer;
+    public bool IsFrozen { get; private set; }
 
     void Awake()
     {
@@ -26,6 +27,7 @@ public class Freezable : MonoBehaviour
 
     public void OnWhistle(bool isFreeze)
     {
+        IsFrozen = isFreeze;
         switch (mode)
         {
             case WeatherMode.FreezeOnly:

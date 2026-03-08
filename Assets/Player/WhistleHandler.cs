@@ -6,11 +6,13 @@ public class WhistleHandler : MonoBehaviour
     private bool hasWhistle;
     private bool isFreeze;
     private Animator animator;
+    private Player player;
     private List<Freezable> freezables = new List<Freezable>();
 
     void Start()
     {
         animator = GetComponent<Animator>();
+        player = GetComponent<Player>();
         RefreshFreezables();
     }
 
@@ -50,5 +52,7 @@ public class WhistleHandler : MonoBehaviour
         {
             f.OnWhistle(isFreeze);
         }
+
+        player.CheckSlidingObject();
     }
 }
