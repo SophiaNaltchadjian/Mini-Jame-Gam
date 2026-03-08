@@ -4,9 +4,18 @@ using UnityEngine;
 
 public class Player : MonoBehaviour
 {
-    [SerializeField] private int speed;
-    [SerializeField] private int jumpForce;
+    [SerializeField] private float maxSpeed;
+    [SerializeField] private float jumpForce;
+    [SerializeField] private float wallJumpForce;
+    [SerializeField] private float gravity;
     [SerializeField] private GameObject JumpEffect;
+    [SerializeField] private float maxFallSpeed;
+    [SerializeField] private float maxWallFallSpeed;
+    [SerializeField] private float acceleration;
+    [Header("Gravity Multipliers")]
+    [SerializeField] private float fallGravityMultiplier;
+    [SerializeField] private float riseGravityMultiplier;
+    [Header("State Flags")]
 
     private bool isGrounded;
     private bool isWallSliding;
@@ -14,6 +23,7 @@ public class Player : MonoBehaviour
     private bool isJumping;
     private Rigidbody2D rb;
     private bool isMidAirJumpLeft;
+    private float horizontal;
 
     void Start()
     {
@@ -24,60 +34,84 @@ public class Player : MonoBehaviour
 
     void Update()
     {
-        
-        if (Input.GetButtonDown("GroundJump") && isGrounded)
+        horizontal = Input.GetAxis("Horizontal");
+        //Why did you make this GroundJump? 
+        if (Input.GetButtonDown("Jump"))
         {
             isJumping = true;
         }
     }
     void FixedUpdate()
     {
+        ApplyCustomGravity(rb);
         Move();
-
         if (isJumping && isGrounded)
         {
             GroundJump();
-            isJumping = false;
-            isGrounded = false;
         }
 
         else if (isJumping && isWallSliding)
         {
             WallJump();
-            isJumping = false;
-            isGrounded = false;
         }
         else if (isJumping && isMidAirJumpLeft)
         {
             MidAirJump();
         }
+        
+        isJumping = false;
     }
 
-    private void WallJump()
+    private void ApplyCustomGravity(Rigidbody2D rigidbody2D)
     {
-        Debug.Log("WallJump");
-        rb.AddForce(transform.up * ((float)jumpForce / 0.5f), ForceMode2D.Impulse);
-        if (isFacingright)
+        float gravityMultiplier = 1f;
+
+        if (rigidbody2D.linearVelocity.y > 0f)
         {
-            rb.AddForce(transform.right * ((float)jumpForce / 0.5f), ForceMode2D.Impulse);
+            gravityMultiplier = riseGravityMultiplier;
+        }
+
+        if (rigidbody2D.linearVelocity.y < 0f)
+        {
+            gravityMultiplier = fallGravityMultiplier;
+        }
+
+        float newVerticalVelocity = rigidbody2D.linearVelocity.y - gravity * gravityMultiplier * Time.fixedDeltaTime;
+
+        if (isWallSliding)
+        {
+            newVerticalVelocity = Mathf.Max(newVerticalVelocity, -maxWallFallSpeed);
+
         }
         else
         {
-            rb.AddForce(transform.right * ((float)jumpForce / 0.5f), ForceMode2D.Impulse);
+            newVerticalVelocity = Mathf.Max(newVerticalVelocity, -maxFallSpeed);
+
         }
+
+        rigidbody2D.linearVelocity = new Vector2(rigidbody2D.linearVelocity.x, newVerticalVelocity);
+    }
+    private void WallJump()
+    {
+        Debug.Log("WallJump");
+        float wallKickForce = isFacingright ? -wallJumpForce : wallJumpForce;
+        rb.linearVelocity = new Vector2(wallKickForce, jumpForce);
     }
 
     private void Move()
     {
-        Vector3 movement = new Vector3(Input.GetAxis("Horizontal"), 0,0);
-        transform.position += movement * Time.deltaTime * speed;
-        if (Input.GetAxis("Horizontal") > 0 && !isFacingright)
+        
+        float targetSpeed = horizontal * maxSpeed;
+        float newSpeed = Mathf.MoveTowards(rb.linearVelocity.x, targetSpeed, acceleration * Time.fixedDeltaTime);
+        rb.linearVelocity = new Vector2(newSpeed, rb.linearVelocity.y);
+        if (horizontal > 0 && !isFacingright)
         {
             isFacingright = true;
             Flip();
         }
-        if (Input.GetAxis("Horizontal") < 0 && isFacingright)
+        if (horizontal < 0 && isFacingright)
         {
+
             isFacingright = false;
             Flip();
         }
@@ -87,7 +121,8 @@ public class Player : MonoBehaviour
     {
 
         Debug.Log("JUMP");
-        rb.AddForce(transform.up *jumpForce, ForceMode2D.Impulse);
+        rb.linearVelocity = new Vector2(rb.linearVelocity.x, jumpForce);
+
       
     }
 
@@ -95,7 +130,7 @@ public class Player : MonoBehaviour
     {
         isMidAirJumpLeft = false;
         Debug.Log("MidAirJump");
-        rb.AddForce(transform.up * jumpForce, ForceMode2D.Impulse);
+        rb.linearVelocity = new Vector2(rb.linearVelocity.x, jumpForce);
 
     }
 
@@ -105,12 +140,10 @@ public class Player : MonoBehaviour
         {
             isGrounded = true;
             isMidAirJumpLeft = true;
-            isWallSliding = false;
         }
-        else if (other.gameObject.tag == "wall")
+        if (other.gameObject.tag == "wall")
         {
             isWallSliding = true;
-            rb.gravityScale = 0.5f;
         }
     }
     private void OnCollisionExit2D(Collision2D other)
@@ -119,10 +152,9 @@ public class Player : MonoBehaviour
         {
             isGrounded = false;
         }
-        else if (other.gameObject.tag == "wall")
+        if (other.gameObject.tag == "wall")
         {
             isWallSliding = false;
-            rb.gravityScale = 1f;
         }
     }
     private void Flip()
