@@ -20,25 +20,45 @@ public class Freezable : MonoBehaviour
     private SpriteRenderer spriteRenderer;
     public bool IsFrozen { get; private set; }
 
+    private AudioController musicController;
+
     void Awake()
     {
+        musicController = GameObject.FindGameObjectWithTag("Audio").GetComponent<AudioController>();
         spriteRenderer = GetComponent<SpriteRenderer>();
     }
 
     public void OnWhistle(bool isFreeze)
     {
+        if (isFreeze)
+        {
+            AudioClip Currentmusic = musicController.musics[1];
+            musicController.audioSourceMusic.clip = Currentmusic;
+            musicController.audioSourceMusic.Play();
+
+            
+        }
+        else
+        {
+            AudioClip Currentmusic = musicController.musics[0];
+            musicController.audioSourceMusic.clip = Currentmusic;
+            musicController.audioSourceMusic.Play();
+          
+        }
+
         IsFrozen = isFreeze;
+        isFreeze = IsFrozen;
         switch (mode)
         {
             case WeatherMode.FreezeOnly:
-                gameObject.SetActive(isFreeze);
+                gameObject.SetActive(isFreeze); 
                 break;
             case WeatherMode.SnowOnly:
                 gameObject.SetActive(!isFreeze);
                 break;
             case WeatherMode.Both:
                 if (spriteRenderer != null)
-                    spriteRenderer.sprite = isFreeze ? freezeSprite : snowSprite;
+                spriteRenderer.sprite = isFreeze ? freezeSprite : snowSprite;
                 break;
         }
     }

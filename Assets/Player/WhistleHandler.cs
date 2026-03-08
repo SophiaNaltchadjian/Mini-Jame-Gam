@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using UnityEditor.Timeline;
 using UnityEngine;
 
 public class WhistleHandler : MonoBehaviour
@@ -8,7 +9,7 @@ public class WhistleHandler : MonoBehaviour
     private Animator animator;
     private Player player;
     private List<Freezable> freezables = new List<Freezable>();
-
+   
     void Start()
     {
         animator = GetComponent<Animator>();
@@ -18,6 +19,7 @@ public class WhistleHandler : MonoBehaviour
 
     public void RefreshFreezables()
     {
+        
         freezables.Clear();
         freezables.AddRange(FindObjectsByType<Freezable>(FindObjectsSortMode.None));
         foreach (Freezable freezable in freezables)
@@ -35,11 +37,15 @@ public class WhistleHandler : MonoBehaviour
 
     public void Collect()
     {
+        AudioClip audioToPlay = player.playerAudioClips[1];
+        player.playerAudioSource.clip = audioToPlay;
+        player.playerAudioSource.Play();
         hasWhistle = true;
     }
 
     public bool CanBlow()
     {
+       
         return hasWhistle;
     }
 

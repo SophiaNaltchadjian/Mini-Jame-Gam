@@ -32,20 +32,22 @@ public class Player : MonoBehaviour
     private float whistleCooldownTimer;
     private bool isOnSlidingObject;
     private GameObject currentGround;
-
+    public AudioSource playerAudioSource;
+    public AudioClip[] playerAudioClips;
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
         spriteRenderer = GetComponent<SpriteRenderer>();
         animator = GetComponent<Animator>();
         whistleHandler = GetComponent<WhistleHandler>();
+        playerAudioSource = GetComponent<AudioSource>();
     }
 
 
 
     void Update()
     {
-        Debug.Log(isSliding);
+       
         horizontal = isOnSlidingObject ? Input.GetAxis("Horizontal") : Input.GetAxisRaw("Horizontal");
 
         if (whistleCooldownTimer > 0f)
@@ -60,6 +62,9 @@ public class Player : MonoBehaviour
         if (Input.GetButtonDown("Jump"))
 
         {
+            AudioClip audioToPlay = playerAudioClips[0];
+            playerAudioSource.clip = audioToPlay;
+            playerAudioSource.Play();
             isJumpingPressed = true;
         }
         if (Input.GetAxis("Horizontal") > 0 && isFacingRight==false)
@@ -189,7 +194,17 @@ public class Player : MonoBehaviour
         if (currentGround != null && currentGround.TryGetComponent<Freezable>(out Freezable freezable))
         {
             isOnSlidingObject = freezable.IsFrozen;
-            Debug.Log(freezable.IsFrozen);
+            if(freezable.IsFrozen == true)
+            {
+                isSliding = true;
+                isOnSlidingObject =true;
+            }
+            else
+            {
+                isSliding=false;
+                isOnSlidingObject = false;
+            }
+            
         }
         else
         {
